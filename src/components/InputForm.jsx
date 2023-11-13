@@ -1,6 +1,8 @@
 import React from "react";
 import {useState, useEffect} from "react";
 
+// Write a function validCard that takes a number as an argument and returns true
+// for a valid number and false for an invalid number.
 function validCard({number}) {
     const [isValid, setIsValid] = useState(false);
     

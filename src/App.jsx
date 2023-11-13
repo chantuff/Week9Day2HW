@@ -1,3 +1,10 @@
+// Credit card numbers can be validated with a process called the Luhn algorithm. The Luhn algorithm works like this:
+
+// Starting with the next to last digit and continuing with every other digit going back to the beginning of the card number, double the digit.
+// Sum all digits in the altered number.
+// If that total is a multiple of 10, the number is valid.
+
+
 // A user enters a credit card in your form
 // If the Luhn Algorithm says its valid, show a message that the card is valid
 // If the Luhn Algorith says its invalid show a message that it is not valid
