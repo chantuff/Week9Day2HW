@@ -1,35 +1,46 @@
-// Credit card numbers can be validated with a process called the Luhn algorithm. The Luhn algorithm works like this:
+import React, { useState } from 'react';
 
-// Starting with the next to last digit and continuing with every other digit going back to the beginning of the card number, double the digit.
-// Sum all digits in the altered number.
-// If that total is a multiple of 10, the number is valid.
+const validCard = (cardNumber) => {
+  // Implementation of the Luhn algorithm
+  const digits = cardNumber.toString().split('').map(Number);
 
-// A user enters a credit card in your form
-// If the Luhn Algorithm says its valid, show a message that the card is valid
-// If the Luhn Algorith says its invalid show a message that it is not valid
-// The Luhn Algo should be checking every time the state changes using the useEffect hook
+  for (let i = digits.length - 2; i >= 0; i -= 2) {
+    let doubledDigit = digits[i] * 2;
+    digits[i] = doubledDigit > 9 ? doubledDigit - 9 : doubledDigit;
+  }
 
-import "./App.css";
+  const sum = digits.reduce((acc, digit) => acc + digit, 0);
 
-function App() {
-  const validCard = (cardNumber) => {
-    const digits = cardNumber.toString().split('').map(Number);
-  
-    for (let i = digits.length - 2; i >= 0; i -= 2) {
-      let doubledDigit = digits[i] * 2;
-      digits[i] = doubledDigit > 9 ? doubledDigit - 9 : doubledDigit;
-    }
-  
-    const sum = digits.reduce((acc, digit) => acc + digit, 0);
-  
-    return sum % 10 === 0;
+  return sum % 10 === 0;
+};
+
+const CreditCardForm = () => {
+  const [cardNumber, setCardNumber] = useState('');
+  const [isValid, setIsValid] = useState(null);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setCardNumber(value);
+    setIsValid(null); //
   };
-  
-  const creditCardNumber = '1234567890123456';
-  const isValid = validCard(creditCardNumber);
-  
-  console.log(isValid);
 
-}
+  const handleValidation = () => {
+    const result = validCard(cardNumber);
+    setIsValid(result);
+  };
 
-export default App;
+  return (
+    <div>
+      <label>
+        Enter valid card number:
+        <input type="text" value={cardNumber} onChange={handleInputChange} />
+      </label>
+      <button onClick={handleValidation}>Check card number</button>
+      {isValid !== null && (
+        <p>{isValid ? 'Valid Card Number' : 'Invalid Card Number'}</p>
+      )}
+    </div>
+  );
+};
+
+export default CreditCardForm;
