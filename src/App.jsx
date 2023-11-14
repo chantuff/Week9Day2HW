@@ -4,25 +4,32 @@
 // Sum all digits in the altered number.
 // If that total is a multiple of 10, the number is valid.
 
-
 // A user enters a credit card in your form
 // If the Luhn Algorithm says its valid, show a message that the card is valid
 // If the Luhn Algorith says its invalid show a message that it is not valid
 // The Luhn Algo should be checking every time the state changes using the useEffect hook
 
-
-import { useState, useEffect } from 'react'
-import './App.css'
-import InputForm from './components/InputForm'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const validCard = (cardNumber) => {
+    const digits = cardNumber.toString().split('').map(Number);
+  
+    for (let i = digits.length - 2; i >= 0; i -= 2) {
+      let doubledDigit = digits[i] * 2;
+      digits[i] = doubledDigit > 9 ? doubledDigit - 9 : doubledDigit;
+    }
+  
+    const sum = digits.reduce((acc, digit) => acc + digit, 0);
+  
+    return sum % 10 === 0;
+  };
+  
+  const creditCardNumber = '1234567890123456';
+  const isValid = validCard(creditCardNumber);
+  
+  console.log(isValid);
 
-
-  return (
-      
-    <InputForm />
-  )
 }
 
-export default App
+export default App;
